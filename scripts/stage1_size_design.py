@@ -1,5 +1,5 @@
 """Stage 1 design screening: use the twin to size PV and battery.
-    .venv\\Scripts\\python -m src.size_design
+    .venv\\Scripts\\python -m scripts.stage1_size_design
 
 Every PV/battery pair in the config ranges runs the same typical day three times in a row,
 with the controller active. A pair is feasible if no load is ever shed. The cheapest feasible
@@ -21,7 +21,7 @@ def run(pv, bat):
     return twin.simulate(pv_kwp=pv, bat_kwh=bat, days=DAYS)
 
 
-if __name__ == "__main__":
+def main():
     grid.load_model()
     rows = []
     for pv in C.SIZING_PV_KWP:
@@ -66,3 +66,7 @@ if __name__ == "__main__":
     match = (best.pv_kwp, best.bat_kwh) == (C.PV_KWP, C.BAT_KWH)
     print("config.py design matches" if match else
           f"UPDATE config.py: PV_KWP = {best.pv_kwp:.1f}, BAT_KWH = {best.bat_kwh:.1f}")
+
+
+if __name__ == "__main__":
+    main()

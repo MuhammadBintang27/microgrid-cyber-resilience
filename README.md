@@ -8,12 +8,12 @@ Proof-of-concept code for the short PhD proposal. **It is not a validated model.
 | Proposal | Prototype | Results |
 |---|---|---|
 | A. Digital Twin (RQ1) | OpenDSS network + Python battery, sensors, controller; 10-min steps, 1-min inside attack windows | `results/stage1/` |
-| Preliminary work: design sizing | `src/size_design.py` (initial 90 kWp / 250 kWh -> sized 120 kWp / 400 kWh) | `results/stage1/sizing.*` |
-| Preliminary work (15 validation checks) | `src/validate.py`, groups A-C | `results/stage1/validation.csv` |
+| Preliminary work: design sizing | `scripts/stage1_size_design.py` (initial 90 kWp / 250 kWh -> sized 120 kWp / 400 kWh) | `results/stage1/sizing.*` |
+| Preliminary work (15 validation checks) | `scripts/stage1_validate.py`, groups A-C | `results/stage1/validation.csv` |
 | B. Attack scenarios (RQ3) | FDIA, DoS, load manipulation, signal delay between sensors and controller; shedding by criticality | `results/stage2/` |
 | Labelled multi-class dataset | 150 one-day scenarios with clouds and load spikes as benign disturbances | `results/stage3/` |
 | C. AI-based detection (RQ2) | statistical baseline, Isolation Forest, Random Forest, twin-based residual detector | `results/stage4/` |
-| D. MCRI, BIS, AHP, sensitivity, latency sweep (RQ4-RQ6) | `src/metrics.py`, `src/run_resilience.py` | `results/stage5/` |
+| D. MCRI, BIS, AHP, sensitivity, latency sweep (RQ4-RQ6) | `src/metrics.py`, `scripts/stage5_resilience.py` | `results/stage5/` |
 
 Not in the prototype (planned for the PhD): LSTM, MATLAB/Simulink frequency dynamics, communication-network
 co-simulation, calibration with field data, the web dashboard.
@@ -24,18 +24,30 @@ co-simulation, calibration with field data, the web dashboard.
 python -m venv .venv
 .venv\Scripts\python -m pip install -r requirements.txt
 
-.venv\Scripts\python -m src.size_design      # Stage 1: size PV and battery with the twin
-.venv\Scripts\python -m src.run_baseline     # Stage 1: 24 h normal operation, topology
-.venv\Scripts\python -m src.validate         # Stage 1 twin checks (A-C) + Stage 2-5 checks (D)
-.venv\Scripts\python -m src.run_attacks      # Stage 2: four reference attacks vs. baseline
-.venv\Scripts\python -m src.make_dataset     # Stage 3: labelled dataset (about 10 s)
-.venv\Scripts\python -m src.detect           # Stage 4: detectors and metrics
-.venv\Scripts\python -m src.run_resilience   # Stage 5: MCRI, BIS, latency sweep, decision model
+.venv\Scripts\python -m scripts.run_all     # every stage in order, about one minute
 ```
-Run the stages in order: Stage 4 reads the Stage 3 dataset, and Stage 5 reads the Stage 4 latencies.
+Or one stage at a time, in this order (Stage 4 reads the Stage 3 dataset, Stage 5 reads the Stage 4 latencies):
+```
+.venv\Scripts\python -m scripts.stage1_size_design   # size PV and battery with the twin
+.venv\Scripts\python -m scripts.stage1_baseline      # 24 h normal operation, topology
+.venv\Scripts\python -m scripts.stage1_validate      # twin checks (A-C) + Stage 2-5 checks (D)
+.venv\Scripts\python -m scripts.stage2_attacks       # four reference attacks vs. baseline
+.venv\Scripts\python -m scripts.stage3_dataset       # labelled dataset
+.venv\Scripts\python -m scripts.stage4_detect        # detectors and metrics
+.venv\Scripts\python -m scripts.stage5_resilience    # MCRI, BIS, latency sweep, decision model
+```
 Close `models/microgrid.dss` in the OpenDSS GUI first; the GUI can save an old copy over it.
 
 ## Code layout
+
+```
+config.py      every parameter, assumptions tagged [ASSUMPTION]
+models/        OpenDSS network (microgrid.dss) and bus coordinates
+data/          example CSV format for measured irradiance and load
+src/           library: the twin, metrics and plots (imported, not run)
+scripts/       pipeline: one script per stage, plus run_all.py
+results/       outputs, one folder per stage
+```
 
 | File | Role |
 |---|---|
@@ -72,7 +84,7 @@ Close `models/microgrid.dss` in the OpenDSS GUI first; the GUI can save an old c
 - Profiles are synthetic; the irradiance curve is scaled to a typical Indonesian day of 5.0 kWh/m2. Measured data
   can be supplied as CSV (format in `data/example_*.csv`).
 - **One design is used in every stage.** The initial assumption (90 kWp, 250 kWh) sheds load every night from day 2
-  (demand about 468 kWh/day vs. 382 kWh of PV). `src/size_design.py` tests 64 PV/battery pairs over three repeated
+  (demand about 468 kWh/day vs. 382 kWh of PV). `scripts/stage1_size_design.py` tests 64 PV/battery pairs over three repeated
   days and picks the cheapest one that never sheds load: **120 kWp with 400 kWh / 60 kW**. Unit costs are assumptions.
 - MCRI and BIS reference scales, AHP matrices, VoLL and recovery costs are placeholders until an expert survey
   and field data are available.

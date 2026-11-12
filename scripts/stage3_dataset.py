@@ -1,5 +1,5 @@
 """Stage 3: labelled dataset of many one-day scenarios.
-    .venv\\Scripts\\python -m src.make_dataset
+    .venv\\Scripts\\python -m scripts.stage3_dataset
 Each scenario has random benign disturbances (passing clouds, load spikes) and, except for
 'normal' scenarios, one attack with random onset, duration, intensity, channel and detection latency.
 Rows are sampled every LOG_STEP_MIN minutes, like SCADA logging, and labelled
@@ -54,7 +54,7 @@ def features(df):
     return f
 
 
-if __name__ == "__main__":
+def main():
     rng = np.random.default_rng(C.SEED)
     grid.load_model()
     rows, scen = [], []
@@ -84,3 +84,7 @@ if __name__ == "__main__":
     print(f"\n{len(data)} rows, {data.scenario.nunique()} scenarios")
     print("Rows per label:\n" + data.label.value_counts().to_string())
     print("Rows with a benign disturbance:", (data.event != "").sum())
+
+
+if __name__ == "__main__":
+    main()

@@ -1,5 +1,5 @@
 """Stage 4: attack detection on the Stage 3 dataset.
-    .venv\\Scripts\\python -m src.detect
+    .venv\\Scripts\\python -m scripts.stage4_detect
 
 Detectors (all flag one logged row at a time):
   statistical   z-score of raw telemetry against normal operation (baseline)
@@ -44,7 +44,7 @@ def detection_latency(test, alarm, scen):
     return pd.DataFrame(out)
 
 
-if __name__ == "__main__":
+def main():
     data = pd.read_csv(C.out_dir(3) / "dataset.csv")
     scen = pd.read_csv(C.out_dir(3) / "scenarios.csv").set_index("scenario")
     split = GroupShuffleSplit(n_splits=1, test_size=0.3, random_state=C.SEED)
@@ -109,3 +109,7 @@ if __name__ == "__main__":
     print(by_kind.pivot(index="detector", columns="kind", values="median_min").round(0).to_string())
     print("\nRandom Forest confusion matrix (rows = true, columns = predicted):\n" + cm.to_string())
     print(f"\nBest F1: {best}; its latencies are used in Stage 5: {lat_best}")
+
+
+if __name__ == "__main__":
+    main()

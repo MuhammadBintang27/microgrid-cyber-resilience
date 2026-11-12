@@ -27,7 +27,7 @@ FINE_MARGIN_MIN = 60     # keep 1-min steps this long after an attack ends
 LOG_STEP_MIN = 10        # SCADA logging interval used for the dataset (min)
 
 # ---------------------------------------------------------------- PV
-# Design used in every stage. Sized by src/size_design.py from the initial assumption below:
+# Design used in every stage. Sized by scripts/stage1_size_design.py from the initial assumption below:
 # the cheapest PV + battery pair that runs three days in a row without shedding any load.
 PV_KWP = 120.0
 PV_DERATE = 0.85         # [ASSUMPTION] temperature, wiring and inverter losses
@@ -42,7 +42,7 @@ SOC_INIT = 0.60
 SOC_MIN, SOC_MAX = 0.20, 1.00
 BAT_EFF = 0.95           # [ASSUMPTION] one-way efficiency (charge or discharge)
 
-# ---------------------------------------------------------------- design sizing (src/size_design.py)
+# ---------------------------------------------------------------- design sizing (scripts/stage1_size_design.py)
 INITIAL_PV_KWP, INITIAL_BAT_KWH = 90.0, 250.0     # first assumption, before the twin checked it
 SIZING_PV_KWP = range(90, 161, 10)
 SIZING_BAT_KWH = range(250, 601, 50)

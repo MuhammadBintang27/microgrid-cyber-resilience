@@ -1,5 +1,5 @@
 """Stage 5: MCRI and BIS, the detection-latency sweep, and the decision model.
-    .venv\\Scripts\\python -m src.run_resilience
+    .venv\\Scripts\\python -m scripts.stage5_resilience
 
 1. Weights from the AHP pairwise matrices in config.py (consistency ratio must be < 0.1).
 2. Latency sweep: each reference attack with detection latency 0-360 min -> ENS, MCRI, BIS.
@@ -34,7 +34,7 @@ def perturbed(w, i, factor):
     return w / w.sum()
 
 
-if __name__ == "__main__":
+def main():
     grid.load_model()
     out = C.out_dir(5)
 
@@ -120,3 +120,7 @@ if __name__ == "__main__":
     print(f"\nSensitivity (+/-{C.SENSITIVITY:.0%} per weight, {len(sens)} cases): attack ranking unchanged in "
           f"{sens.attack_ranking_same.sum()}, technical ranking unchanged in {sens.technical_ranking_same.sum()}, "
           f"investment ranking unchanged in {sens.investment_ranking_same.sum()}")
+
+
+if __name__ == "__main__":
+    main()
