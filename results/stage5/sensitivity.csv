@@ -1,0 +1,19 @@
+index,criterion,factor,attack_ranking,attack_ranking_same,technical_ranking,technical_ranking_same,investment_ranking,investment_ranking_same
+MCRI,latency,0.8,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+MCRI,latency,1.2,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+MCRI,voltage,0.8,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+MCRI,voltage,1.2,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+MCRI,imbalance,0.8,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+MCRI,imbalance,1.2,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+MCRI,ens,0.8,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+MCRI,ens,1.2,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+MCRI,recovery,0.8,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+MCRI,recovery,1.2,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+BIS,wens,0.8,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+BIS,wens,1.2,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+BIS,critical_downtime,0.8,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+BIS,critical_downtime,1.2,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+BIS,recovery,0.8,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+BIS,recovery,1.2,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+BIS,financial,0.8,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True
+BIS,financial,1.2,dos > fdia > load > delay,True,load > dos > fdia > delay,True,ai_detection > bigger_battery,True

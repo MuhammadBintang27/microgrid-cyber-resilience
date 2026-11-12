@@ -1,0 +1,22 @@
+group,check,status,detail
+A,Power balance at every step: PV + battery = load + losses,PASS,max error 0.0014 kW
+A,SoC equals the integral of battery power (recomputed),PASS,max error 3.33e-16
+A,SoC within 20%-100%,PASS,37.0% - 100.0%
+A,Battery power <= 60 kW,PASS,max 47.1 kW
+B,Household bus voltage: hand calculation vs OpenDSS,PASS,"hour 19.0: hand 0.9693 pu, OpenDSS 0.9683 pu"
+B,Trunk + household cable losses: I^2R vs OpenDSS total,PASS,hand 1.04 kW (2 cables) <= OpenDSS 1.11 kW (all cables)
+C,Voltage 0.95-1.05 pu,PASS,0.9676 - 1.0000 pu
+C,Frequency indicator 49.5-50.5 Hz,PASS,49.69 - 50.39 Hz
+C,Cable loading <= 100%,PASS,max 30%
+C,No load lost over 24 h,PASS,ENS 0.00 kWh
+C,Network losses plausible (0.5-5% of load),PASS,1.67%
+C,Daily irradiation typical for Indonesia (4.0-5.5 kWh/m2),PASS,5.00 kWh/m2/day (clear-sky profile)
+C,Runs 3 days in a row without losing load,PASS,"ENS 0.0 kWh; end-of-day SoC: 55%, 55%, 55%"
+C,PV energy used covers the daily need,PASS,PV used 482 kWh vs load + losses 475 kWh (PV available 510 kWh)
+C,Measured-data CSV path (synthetic -> hourly CSV -> read back),PASS,"energy difference: irradiance 0.6%, load 0.1% (hourly interpolation)"
+D,D1 Zero-intensity attack leaves the system unchanged,PASS,max SoC difference 0.0e+00
+D,D2 Attack detected and recovered at once has no effect,PASS,steps labelled as attacked: 0
+D,D3 Controller sheds the least critical loads first,PASS,"order shed from SoC 21.5%: ['houses', 'school', 'pump', 'clinic']"
+D,"D4 With the controller, the design runs 3 days without shedding",PASS,"ENS 0.0 kWh, min SoC 27.3%"
+D,D5 AHP weights for MCRI are consistent (CR < 0.1),PASS,"CR 0.011; weights 0.12, 0.08, 0.20, 0.38, 0.22"
+D,D5 AHP weights for BIS are consistent (CR < 0.1),PASS,"CR 0.017; weights 0.25, 0.42, 0.11, 0.22"

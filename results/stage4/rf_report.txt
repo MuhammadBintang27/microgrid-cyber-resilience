@@ -1,0 +1,11 @@
+              precision    recall  f1-score   support
+
+      normal       1.00      1.00      1.00      5930
+        fdia       1.00      1.00      1.00       141
+         dos       0.88      0.83      0.86       175
+        load       0.88      0.96      0.92        76
+       delay       1.00      0.99      0.99       158
+
+    accuracy                           0.99      6480
+   macro avg       0.95      0.96      0.95      6480
+weighted avg       0.99      0.99      0.99      6480

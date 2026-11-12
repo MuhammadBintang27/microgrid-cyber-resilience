@@ -1,0 +1,17 @@
+detector,kind,detected,median_min
+isolation,delay,8/9,10.0
+isolation,dos,9/10,7.0
+isolation,fdia,9/9,7.0
+isolation,load,4/4,6.0
+random_forest,delay,9/9,5.0
+random_forest,dos,9/10,7.0
+random_forest,fdia,9/9,3.0
+random_forest,load,4/4,6.0
+statistical,delay,0/9,
+statistical,dos,1/10,201.0
+statistical,fdia,0/9,
+statistical,load,4/4,6.0
+twin_residual,delay,9/9,5.0
+twin_residual,dos,9/10,7.0
+twin_residual,fdia,9/9,3.0
+twin_residual,load,4/4,6.0

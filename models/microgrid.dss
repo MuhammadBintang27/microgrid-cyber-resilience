@@ -1,0 +1,39 @@
+! Off-grid communal PV microgrid, 0.4 kV, 50 Hz, 6 buses, radial:
+!
+!   main (battery inverter + PV) --- jn ---+--- clinic
+!                                          +--- pump
+!                                          +--- school
+!                                          +--- houses  (longest feeder)
+!
+! Load and PV kW below are placeholders; Python overwrites them every step (see config.py).
+! Cable impedance, rating and lengths are [ASSUMPTION] (roughly 95 mm2 aluminium ABC).
+! Note: close this file in the OpenDSS GUI before running Python, or the GUI may save an old copy over it.
+
+Clear
+Set DefaultBaseFrequency=50
+
+! The grid-forming battery inverter is modelled as the voltage source at bus "main".
+! A large short-circuit power means a near-ideal source. [ASSUMPTION]
+New Circuit.microgrid basekv=0.4 pu=1.0 phases=3 bus1=main mvasc3=100000 mvasc1=100000
+
+! normamps = continuous current rating (A). [ASSUMPTION]
+New Linecode.abc95 nphases=3 R1=0.32 X1=0.075 R0=0.32 X0=0.075 units=km normamps=200 emergamps=250
+
+New Line.trunk    bus1=main bus2=jn     linecode=abc95 length=0.10 units=km
+New Line.l_clinic bus1=jn   bus2=clinic linecode=abc95 length=0.15 units=km
+New Line.l_pump   bus1=jn   bus2=pump   linecode=abc95 length=0.30 units=km
+New Line.l_school bus1=jn   bus2=school linecode=abc95 length=0.20 units=km
+New Line.l_houses bus1=jn   bus2=houses linecode=abc95 length=0.35 units=km
+
+New Generator.pv bus1=main phases=3 kV=0.4 kW=0 pf=1 model=1
+
+New Load.clinic bus1=clinic phases=3 kV=0.4 kW=1 pf=0.9 model=1
+New Load.pump   bus1=pump   phases=3 kV=0.4 kW=1 pf=0.9 model=1
+New Load.school bus1=school phases=3 kV=0.4 kW=1 pf=0.9 model=1
+New Load.houses bus1=houses phases=3 kV=0.4 kW=1 pf=0.9 model=1
+
+Set voltagebases=[0.4]
+Calcvoltagebases
+
+! Schematic bus coordinates (for drawings only). In the OpenDSS GUI: Solve, then Plot Circuit.
+Buscoords buscoords.csv

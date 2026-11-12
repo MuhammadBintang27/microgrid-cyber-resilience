@@ -1,0 +1,9 @@
+{
+ "detector": "random_forest",
+ "latency_min": {
+  "fdia": 3.0,
+  "dos": 7.0,
+  "load": 6.0,
+  "delay": 5.0
+ }
+}

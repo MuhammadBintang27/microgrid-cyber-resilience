@@ -1,0 +1,6 @@
+main, 0, 0
+jn, 200, 0
+pump, 420, 225
+clinic, 420, 75
+school, 420, -75
+houses, 420, -225
